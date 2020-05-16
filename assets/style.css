@@ -117,9 +117,9 @@ h2:hover .card-hovered {
 }
 
 /* Tony */
-.card-hover:hover .card-hovered {
+/* .card-hover:hover .card-hovered {
     display: block !important;
-}
+} */
 
 /* Tony */
 .card-section {
@@ -131,9 +131,9 @@ h2:hover .card-hovered {
     color: white;
     background-color: #bcd0e5;
     width: 100%;
-    display: none;
+    /* display: none;
     position: absolute;
-    top: 75%;
+    top: 75%; */
 }
 
 #content-blah {
@@ -141,12 +141,21 @@ h2:hover .card-hovered {
     overflow: scroll;
 }
 
+#content-blah p {
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    
+    color: white !important;
+    text-shadow: -1px 0 black,0 1px black,1px 0 black,0 -1px black;
+}
+
 /* Tony */
 @media (min-width: 320px) {
     input[type=search] {
         margin-left: auto;
         margin-right: auto;
-        width: 90%;
+        /*width: 90%;*/
     }
 
     .card-grid {
