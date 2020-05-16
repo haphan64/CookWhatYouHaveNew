@@ -141,6 +141,15 @@ h2:hover .card-hovered {
     overflow: scroll;
 }
 
+#content-blah p {
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    
+    color: white !important;
+    text-shadow: -1px 0 black,0 1px black,1px 0 black,0 -1px black;
+}
+
 /* Tony */
 @media (min-width: 320px) {
     input[type=search] {

@@ -15,22 +15,22 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
 
-console.log(response);
-console.log(response.total_results);
+//console.log(response);
+//console.log(response.total_results);
            
 
 var p = Math.floor(Math.random() * parseInt(response.photos.length)) + 1;
 
-  console.log(p);
+  //console.log(p);
   
-  console.log(response.photos[p].src.original);
+  //console.log(response.photos[p].src.original);
 
-  console.log(response.photos[p].url);            
+  //console.log(response.photos[p].url);            
   
   $('.hero-section').css('background-image', 'url(' + response.photos[p].src.landscape + ')');
 
-  console.log(response.photos[p].photographer);
-  console.log(response.photos[p].photographer_url);
+  //console.log(response.photos[p].photographer);
+  //console.log(response.photos[p].photographer_url);
 
   $("#credits").append("<a href=" + response.photos[p].photographer_url + ">" + response.photos[p].photographer + " @ Pexels" + "</a>");
 
@@ -40,8 +40,8 @@ var p = Math.floor(Math.random() * parseInt(response.photos.length)) + 1;
 
 // Fetch recipes from ingredients
 
-var apiId = "6d15138b427645f68ff32030ae3cb1cc"; 
-// var apiId ="b229212145ae4030923cb4146500d590";
+// var apiId = "6d15138b427645f68ff32030ae3cb1cc"; 
+var apiId ="b229212145ae4030923cb4146500d590";
 // var apiId ="648937ec746a43f5b57dfa8e5975e983";
 
 // var ingredients = "apples"; 
@@ -68,38 +68,38 @@ $("#search").submit(function(event){
 function searchRecipes (ingredients){  
 
   var queryURL= "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + ingredients + "&apiKey=" + apiId;
-  console.log(queryURL)
+  //console.log(queryURL)
   $.ajax({
       url: queryURL,
       method: "GET"
   }).then(function(response) {
 
     for (i=0; i<response.length; i++){
-        console.log(response[i].title)
+        //console.log(response[i].title)
     
     createRecipeCard(response[i].image, response[i].title, response[i].id);
     //var recipeCard='<div class="card col-3" style="width: 18rem;"><img src='+ response[i].image +  ' class="card-img-top" alt="..."><div class="card-body"><h5 class="card-title">' +response[i].title  +'</h5><p class="card-text">.</p><a href="#" class="btn btn-primary viewRecipe" recipe= '+response[i].id + '>View Recipe</a></div></div>'
     
     }
+    
+  });
+}
 
-    $(".card").on ("click", function(){
-        //alert("hello");
-        event.preventDefault();
+$('.hero-section').on('click', '.card', function(event) {
+    event.preventDefault();
         let id = $(this).attr("data-index");
-        console.log(id);
+        console.log("clicked id: " + id);
         //$("#content-blah").empty();
         $('#backbutton').show();
         
         getRecipe(id);
-    });
-  });
-}
+});
 
-
-
-searchRecipes (ingredients);
+//searchRecipes (ingredients);
 
 function getRecipe(id){
+    console.log("getrecipe called: " + id);
+
     var queryURL="https://api.spoonacular.com/recipes/" +id + "/information?includeNutrition=false" + "&apiKey=" + apiId;
     $.ajax({
         url: queryURL,
@@ -108,15 +108,15 @@ function getRecipe(id){
         
         $("#content-blah ").append("<h2>" + response.title + "</h2>");
         $("#content-blah").append('<img src='+ response.image + ">");
-        ingredients = $("<div>");
-        ingredients.append("<p>" + "Ingredients" + "</p>");
+        var recipeIngredients = $("<div>");
+        recipeIngredients.append("<p>" + "Ingredients" + "</p>");
         
         for (i=0; i<response.extendedIngredients.length; i++){
             
             // console.log(response.extendedIngredients[i].original)
             var ingredient = $("<p>");
             ingredient.text(response.extendedIngredients[i].original);
-            ingredients.append(ingredient);
+            recipeIngredients.append(ingredient);
         }
 
         
@@ -138,7 +138,7 @@ function getRecipe(id){
         
         $('#background').hide();
         $("#search").hide();
-        $("#content-blah").append(ingredients)
+        $("#content-blah").append(recipeIngredients);
         $('#content-blah').append(instructions);
         $('#show').show();
         
@@ -149,20 +149,13 @@ function getRecipe(id){
 
 function createRecipeCard (responseImage, title, id) {
 
-    console.log('i got here');
-
     var cell = $('<div>');
     cell.attr('class', 'cell small-6 medium-6 large-3');
-
-    console.log('cell' + cell);
 
     var card = $('<div>');
     card.attr('id','view');
     card.attr('class', 'card card-hover');
     card.attr('data-index',id);
-    
-
-    console.log(card);
 
     var img = $('<img>');
     img.attr('src', responseImage);
@@ -179,17 +172,17 @@ function createRecipeCard (responseImage, title, id) {
 
     card.append(img).append(cardSection);
 
-    console.log('logging card: ' + card);
     cell.append(card);
 
     $('#cardGrid').append(cell);
 
-    console.log('logging cell: ' + cell);
 }
 
 $('#backbutton').click(function() {
 
     //alert('back');
+    $('#content-blah').empty();
+    $('#cardGrid').empty();
     $('#show').hide();
     $('#background').show();
     $('#search').show();
